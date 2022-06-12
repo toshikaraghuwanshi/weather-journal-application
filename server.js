@@ -51,11 +51,6 @@ const appData = {}
 //     res.send({message: "Message from server via post API"})
 // })
 
-// var gelocationSecretKey =  'getAIzaSyB3r-74Y6xl5AgvvKZcrp7qroVwy-JPVAI'
-// https://maps.googleapis.com/maps/api/geocode/json?address=YOUR_ZIP&key=YOUR_API_KEY
-
-http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid={API key}
-
 // Weather API
 app.post('/getWeather', function (req, res){
     console.log(req.body)
