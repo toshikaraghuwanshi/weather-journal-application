@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-weather = {};
+weather = [];
 
 // Express to run server and routes
 //express js is used to create API 
@@ -30,7 +30,7 @@ const port = 3000;
 
 // Spin up (turn-on)the server
 
-const server = app.listen(port, ()=>{console.log(`running on localhost: ${port}`)})
+const server = app.listen(port, () => { console.log(`running on localhost: ${port}`) })
 
 // Callback to debug
 
@@ -51,41 +51,16 @@ const appData = {}
 //     res.send({message: "Message from server via post API"})
 // })
 
-// Weather API
-app.post('/getWeather', function (req, res){
-    console.log(req.body)
+// Weather API creation
+//req contains data received, res is used to send data backend to frontend 
+app.post('/getWeather', function (req, res) {
+    //console.log(req.body)
     // data.push(req.body)
+    //console.log(req.body.temp)
+    if (req.body.temp !== '') {
+        weather.push(req.body);
+        //console.log(weather)
+        res.send({ message: "Message from server via post API" })
 
-    if(req.body.zip === "") {
-        res.send({message: "Please send valid ZIP code"})
     }
-
-    if(req.body.zip !== "") {
-      try{
-        axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${req.body.zip}&limit=5&appid=8af8da93c536a6e913fb9ed73ea948d8`)
-            .then(response => {
-                if(response.data.length > 0) {
-                    const lat = response.data[0].lat
-                    const lon = response.data[0].lon
-                    axios.get(`https://api.openweathermap.org/data/2.5/weather/?lat=${lat}&lon=${lon}&units=metric&APPID=8af8da93c536a6e913fb9ed73ea948d8`)
-                    .then(output=> {
-
-                            console.log('output', output)
-                            const weather = {
-                                temp: output.data.main.temp,
-                                content: output.data.main.feels_like
-                            }
-                            res.send({weather: weather})
-
-                        }
-                    )
-
-
-                }
-            });
-        } catch(err) {
-            res.send(error)
-        }
-
-    } 
 })
