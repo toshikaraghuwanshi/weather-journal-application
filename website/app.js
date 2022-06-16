@@ -6,6 +6,7 @@ function handleForm(event) {
   let zip = event.target.elements.zip.value
 
   if(zip !== "") {
+    
     //API calling
     axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${zip}&limit=5&appid=8af8da93c536a6e913fb9ed73ea948d8`)
     .then(response => {
@@ -36,11 +37,23 @@ function handleForm(event) {
                   date:newDate,
                   
               }
-            
+            //send temp and other data to backend
               axios.post('http://localhost:3000/getWeather', data)
                .then(result => {
                   console.log(result)
+                  axios.get('http://localhost:3000/weatherHistory')
+                  .then( weatherHistory => {
+                    console.log(weatherHistory)
+                    document.getElementById('test1').innerHTML = weatherHistory.data.projectData.map(weather => 
+                      `<div>
 
+                        <div>Weather-Temprature: ${weather.temp}</div>
+                        <div>Weather-Content: ${weather.content}</div>
+                        <div> Weather-Date: ${weather.date}</div>
+                       
+                      </div>`
+                  ).join('')
+                  })
                 
                });
         

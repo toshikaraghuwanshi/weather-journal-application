@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-weather = [];
+projectData = [];
 
 // Express to run server and routes
 //express js is used to create API 
@@ -45,11 +45,12 @@ const appData = {}
 
 // // Post Route
 // const data = []
-// app.post('/addMovie', function (req, res){
+app.get('/weatherHistory', function (req, res){
 //     console.log(req.body)
 //     data.push(req.body)
-//     res.send({message: "Message from server via post API"})
-// })
+     res.send({projectData:projectData})
+     
+ })
 
 // Weather API creation
 //req contains data received, res is used to send data backend to frontend 
@@ -58,8 +59,8 @@ app.post('/getWeather', function (req, res) {
     // data.push(req.body)
     //console.log(req.body.temp)
     if (req.body.temp !== '') {
-        weather.push(req.body);
-        //console.log(weather)
+        projectData.push(req.body);
+        console.log(projectData)
         res.send({ message: "Message from server via post API" })
 
     }
